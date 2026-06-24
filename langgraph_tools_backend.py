@@ -14,7 +14,7 @@ import requests
 load_dotenv()
 
 # -------------------
-# 1. LLMs
+# 1. LLM
 # -------------------
 llm = ChatMistralAI(model='mistral-small-2506')
 

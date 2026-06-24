@@ -13,6 +13,9 @@ import aiosqlite
 import requests
 import asyncio
 import threading
+import sys
+import os
+
 
 load_dotenv()
 
@@ -52,17 +55,20 @@ def get_stock_price(symbol: str) -> dict:
     Fetch latest stock price for a given symbol (e.g. 'AAPL', 'TSLA') 
     using Alpha Vantage with API key in the URL.
     """
-    url = f"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey=C9PE94QUEW9VWGFM"
+    url = f"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey=FW1E2WVT2BFRFO8P"
     r = requests.get(url)
     return r.json()
 
+
+# MCP client for local FastMCP server
+script_path = os.path.join(os.path.dirname(__file__), "main.py")
 
 client = MultiServerMCPClient(
     {
         "arith": {
             "transport": "stdio",
-            "command": "python3",
-            "args": ["/Users/nitish/Desktop/mcp-math-server/main.py"],
+            "command": sys.executable,
+            "args": [script_path],
         },
         "expense": {
             "transport": "streamable_http",  # if this fails, try "sse"
